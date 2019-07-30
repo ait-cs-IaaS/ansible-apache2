@@ -1,0 +1,26 @@
+---
+
+dependencies: []
+
+galaxy_info:
+
+  author:              Wolfgang Hotwagner
+  description: >
+    Apache2-Role
+  license: MIT
+  min_ansible_version: 2.1.0
+  platforms:
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+    - name: Ubuntu
+      versions:
+        - bionic
+  categories:
+    - system
+    - networking
+    - debian
+    - ubuntu
+    - webserver
+    - apache2
