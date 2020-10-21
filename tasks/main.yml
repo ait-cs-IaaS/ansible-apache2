@@ -8,11 +8,20 @@
 
 - name: Install apache2-packages
   apt:
-    name: "{{apache2_packages}}"
+    name: "{{ apache2_packages + apache2_additional_packages }}"
     state: present
     update_cache: yes
   tags: [install]
 
+- name: Enable/Disable apache2 modules
+  community.general.apache2_module:
+    state: "{{ item.state | default(omit)}}"
+    name: "{{ item.name }}"
+    force: "{{ item.force | default(omit) }}"
+    ignore_configcheck: "{{ item.ignore_configcheck | default(omit)}}"
+    identifier: "{{ item.identifier | default(omit) }}"
+  loop: "{{ apache2_modules }}"
+  tags: [config]
 
 - name: start and enable apache2
   service: name=apache2 state=started enabled=yes
@@ -46,7 +55,7 @@
     group: "{{apache2_group}}"
     recurse: yes
   with_items: "{{ apache2_vhosts }}"
-  when: item.name is defined
+  when: item.name is defined and (item.vhost_dir|default(True))
   tags: [config]
 
 - name: create vhosts
@@ -86,19 +95,19 @@
   tags: [config]
 
 - name: copy certs
-  copy: src="{{ item.cert }}" dest="{{ apache2_ssl_cert_path }}" force="yes"
+  copy: src="{{ item.cert }}" dest="{{ apache2_ssl_cert_path }}/{{ item.cert | basename }}" force="yes"
   when: item.copycerts is defined and item.copycerts == True
   with_items: "{{ apache2_vhosts }}"
   tags: [config]
 
 - name: copy keys
-  copy: src="{{ item.key }}" dest="{{ apache2_ssl_key_path }}" force="yes"
+  copy: src="{{ item.key }}" dest="{{ apache2_ssl_key_path }}/{{ item.key | basename }}" force="yes"
   when: item.copycerts is defined and item.copycerts == True
   with_items: "{{ apache2_vhosts }}"
   tags: [config]
 
 - name: copy certchain
-  copy: src="{{ item.certchain }}" dest="{{ apache2_ssl_cert_path }}"
+  copy: src="{{ item.certchain }}" dest="{{ apache2_ssl_cert_path }}/{{ item.certchain | basename }}"
   when:
     - item.copycerts is defined and item.copycerts == True
     - item.certchain is defined

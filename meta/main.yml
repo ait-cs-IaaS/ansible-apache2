@@ -1,9 +1,10 @@
 ---
 
 dependencies: []
+collections: 
+  - community.general
 
 galaxy_info:
-
   author:              Wolfgang Hotwagner
   description: >
     Apache2-Role
