@@ -9,11 +9,7 @@ Installs apache2 + packages and manages apache-modules and vhosts.
 # Defaults:
 
 ```
-apache2_packages: []
-apache2_modules:
-  - name: "headers"
-  - name: "rewrite"
-  - name: "ssl"
+apache2_additional_packages: []
 apache2_sslciphers: 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256'
 apache2_sslproto: 'all -SSLv3 -TLSv1 -TLSv1.1'
 apache2_servertokens: "Prod"
@@ -27,8 +23,10 @@ apache2_vhosts: []
 # Configuration example:
 
 ```
-    apache2_packages:
-      - libapache2-mod-php7.0
+    apache2_modules:
+      - name: "headers"
+      - name: "rewrite"
+      - name: "ssl"
     apache2_vhosts:
       - name: example.com
         aliases: "www.example.com web.example.com"
@@ -43,6 +41,4 @@ apache2_vhosts: []
         certchain: "ca.pem"
 	# this will copy your local ssl-files to the server
         copycert: True
-
 ```
-*use libapache2-mod-php7.2 on Ubuntu 18.04*
