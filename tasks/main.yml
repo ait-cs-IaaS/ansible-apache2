@@ -6,7 +6,7 @@
   tags: [install]
 
 - name: Enable/Disable apache2 modules
-  apache2_module:
+  community.general.apache2_module:
     state: "{{ item.state | default(omit)}}"
     name: "{{ item.name }}"
     force: "{{ item.force | default(omit) }}"
