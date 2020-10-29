@@ -1,6 +1,6 @@
 - name: Install apache2-packages
   apt:
-    name: "{{ apache2_packages + apache2_additional_packages }}"
+    name: "{{ apache2_base_packages + apache2_packages + apache2_additional_packages }}"
     state: present
     update_cache: yes
   tags: [install]
