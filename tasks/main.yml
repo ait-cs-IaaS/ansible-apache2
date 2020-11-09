@@ -90,12 +90,14 @@
   copy: src="{{ item.cert }}" dest="{{ apache2_ssl_cert_path }}/{{ item.cert | basename }}" force="yes"
   when: item.copycerts is defined and item.copycerts == True
   with_items: "{{ apache2_vhosts }}"
+  notify: restart apache2
   tags: [config]
 
 - name: copy keys
   copy: src="{{ item.key }}" dest="{{ apache2_ssl_key_path }}/{{ item.key | basename }}" force="yes"
   when: item.copycerts is defined and item.copycerts == True
   with_items: "{{ apache2_vhosts }}"
+  notify: restart apache2
   tags: [config]
 
 - name: copy certchain
@@ -104,5 +106,6 @@
     - item.copycerts is defined and item.copycerts == True
     - item.certchain is defined
   with_items: "{{ apache2_vhosts }}"
+  notify: restart apache2
   tags: [config]
 
