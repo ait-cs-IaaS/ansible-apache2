@@ -7,7 +7,7 @@ galaxy_info:
   role_name: apache2
   author: Wolfgang Hotwagner
   description: Apache2-Role
-  license: GPL-3.0-3.0
+  license: GPL-3.0
   company: Austrian Institute of Technology
   min_ansible_version: 2.1.0
   platforms:
@@ -18,6 +18,7 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - bionic
+        - focal
   categories:
     - system
     - networking
